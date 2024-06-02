@@ -1,0 +1,71 @@
+{% extends 'partials/_responsive_logo.html' %}
+{% load static %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        p {
+            font-family: 'Franklin Gothic Book';
+            font-size: 25px;
+            text-align: center;
+            color: #08312e;
+        }
+
+    </style>
+    <title>Verify Your Email</title>
+</head>
+<body>
+<div style="padding-top:20%;padding-bottom:5%;text-align: center"><i style="font-size: 150px;color: #08312e" class="fa-solid fa-shield-halved"></i></div>
+<p>
+We take care of your Security   <br>
+Please verify your email ,we've sent an one time password via email .
+
+</p>
+
+<div style="display: flex; justify-content: center; align-items: center;">
+    <div style="width: 50%;" class="mb-3">
+      <label for="exampleFormControlInput1" class="form-label">Verification Password</label>
+      <input type="text" id="otp" style="background-color: transparent;border-color: black" class="form-control" placeholder="OTP*">
+    </div>
+  </div>
+<div style="text-align: center">
+<btn onclick="verifyOTP()" style="text-align:center;background-color: #08312e;" class="btn rounded-0 text-warning">START</btn>
+<br>
+<p id="wrongOtpMsg" style="display: none">Incorrect OTP please try again:</p>
+</div>
+
+</body>
+<script>
+    function verifyOTP() {
+            const otpInput = document.getElementById('otp').value;
+            fetch('/accounts/check-otp/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ input: otpInput })
+            })
+            .then(response => response.json())
+            .then(data => {
+               if (data.status === 'success') {
+                    window.location.href = data.redirect_url; // Yönlendirme işlemi
+                } else {
+                   document.getElementById("wrongOtpMsg").style.display="inline-block";
+                }
+            });
+        }
+</script>
+</html>
+{% endblock %}

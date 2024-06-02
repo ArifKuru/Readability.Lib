@@ -1,0 +1,151 @@
+{% extends 'partials/_base.html' %}
+
+{% load static %}
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <title>Form</title>
+</head>
+<body style="background-color: #083130">
+<button id="AllBtn" type="button" class="btn btn-warning" style="margin-left: 70px; margin-right: 15px;background-color: #083130; color: #FFFFFF; border: none; border-radius: 0;" onclick="window.location.href='{% url 'form:form' 'All' %}'">
+    All <i class="fa-solid fa-globe" style="color: #7e7e7e"></i>
+</button>
+                        <button id="ChildBtn" value="Child" type="button" class="btn btn-warning" style=" margin-right: 15px;background-color: #083130; color: #FFFFFF; border: none; border-radius: 0;"  onclick="window.location.href='{% url 'form:form' 'Child' %}'">
+    Child <i class="fas fa-child" style="color: green;"></i>
+</button>
+
+            <button id="Science-FictionBtn" value="Science-Fiction" type="button" class="btn btn-warning" style=" margin-right: 15px;background-color: #083130; color: #FFFFFF; border: none; border-radius: 0;" onclick="window.location.href='{% url 'form:form' 'Science-Fiction' %}'">
+    Science-Fiction <i class="fas fa-atom" style="color:  deepskyblue;"></i>
+</button>
+
+            <button id="Crime-FictionBtn" value="Crime-Fiction" type="button" class="btn btn-warning" style="  margin-right: 15px;background-color: #083130; color: #FFFFFF; border: none; border-radius: 0;"  onclick="window.location.href='{% url 'form:form' 'Crime-Fiction' %}'">
+    Crime-Fiction <i class="fas fa-handcuffs" style="color:rgb(128,128,128)"></i>
+</button>
+     <button id="FantasyBtn" value="Fantasy" type="button" class="btn btn-warning" style="margin-right: 15px;background-color: #083130; color: #FFFFFF; border: none; border-radius: 0;"  onclick="window.location.href='{% url 'form:form' 'Fantasy' %}'">
+    Fantasy <i class="fa-solid fa-dragon" style="color: red"></i>
+</button>
+    <button id="HorrorBtn" value="Horror" type="button" class="btn btn-warning" style="background-color: #083130; color: #FFFFFF; border: none; border-radius: 0;" onclick="window.location.href='{% url 'form:form' 'Horror' %}'">
+    Horror <i class="fa-solid fa-book-skull" style="color:saddlebrown;"></i>
+</button>
+
+
+            <button id="AdventureBtn" value="Adventure" type="button" class="btn btn-warning" style=" margin-right: 24px;background-color: #083130; color: #FFFFFF; border: none; border-radius: 0;" onclick="window.location.href='{% url 'form:form' 'Adventure' %}'">
+    Adventure <i class="fa-solid fa-wand-sparkles" style="color: greenyellow"></i>
+</button>
+
+            <button id="RomanceBtn" value="Romance" type="button" class="btn btn-warning" style=" margin-right: 24px;background-color: #083130; color: #FFFFFF; border: none; border-radius: 0;" onclick="window.location.href='{% url 'form:form' 'Romance' %}'">
+    Romance <i class="fa-solid fa-heart" style="color: red"></i>
+</button>
+
+            <button id="MysteryBtn" value="Mystery" type="button" class="btn btn-warning" style="  margin-right: 24px;background-color: #083130; color: #FFFFFF; border: none; border-radius: 0;" onclick="window.location.href='{% url 'form:form' 'Mystery' %}'">
+    Mystery <i class="fa-solid fa-clipboard-question" style="color: tomato"></i>
+</button>
+     <button id="DramaBtn" value="Drama" type="button" class="btn btn-warning" style="margin-right: 24px;background-color: #083130; color: #FFFFFF; border: none; border-radius: 0;" onclick="window.location.href='{% url 'form:form' 'Drama' %}'">
+    Drama <i class="fa-solid fa-face-sad-cry" style="color: orange"></i>
+</button>
+    <button id="ComedyBtn" value="Comedy" type="button" class="btn btn-warning" style=" background-color: #083130; color: #FFFFFF; border: none; border-radius: 0;" onclick="window.location.href='{% url 'form:form' 'Comedy' %}'">
+    Comedy <i class="fa-solid fa-masks-theater" style="color: darkmagenta"></i>
+</button>
+                {% if stories %}
+                {% for story in stories %}
+{#                    {% if story.category != window.story_category %}#}
+{#                    {% else %}#}
+
+
+                        <div class="container justify-content-center">
+
+                    <div class="row justify-content-center">
+                    <div class="col-3 d-lg-block d-none">
+
+                    </div>
+                        <div class="col d-lg-block d-lg-block" style="position: relative;text-align: center";>
+                                <img style="position: absolute; z-index: -1; top: 0; left: 0;height: 100%;width: 100%" src="{% static "images/scroll-page.png" %}" alt="Background Image">
+
+                            <div class="row ">
+                                                            <div class="col-2 d-lg-block d-block"></div>
+                            <div class="col-8 d-lg-block d-block">
+                        <div style="background-color:transparent;border-radius: 0;border: 0;padding: 2px" class="card mb-4 box-shadow">
+                            <div style="background-color:transparent;border-radius: 0;border: 0" class="card-header">
+<div>
+     <a style="text-decoration: none;color: inherit" href="{% url "profile:visit_profile" username=story.author.username %}"> <div class="row" style="padding-top: 40px">
+     <div class="col-1" style="text-align: start;margin: 0;padding: 0;margin-left: 5px">
+            <img style="object-fit:cover;height:50px;width: 50px;border-radius: 50%;"style="border-radius: 50%; height: 50px;" src="{{ story.author.profile.image.url }}">
+        </div>
+        <div class="col" style="text-align: start;margin-left: 15px">
+            <b style="font-family: sans-serif">{{ story.author.username }}</b>
+            <br>
+                                    <small style="font-size: smaller;font-family: sans-serif" class="text-muted">{{ story.PublishDate }}</small>
+        </div>
+    </div></a>
+</div>
+
+  </div>
+                            <a href="{% url 'form:detail' story.storyId %}"><img style="border-radius: 0" class="card-img-top" src="/media/{{ story.image }}" alt="image of story"></a>
+<div class="card-body" style="background-color: transparent;">
+                                <p class="card-text" style="display:inline;height:80px;font-family: 'Franklin Gothic Book'">{{ story.content|truncatewords:20 }}</p>
+                                <div class="d-flex justify-content-between align-items-center" style="padding-bottom: 20px">
+
+
+                                    <a href="{% url 'form:detail' story.storyId %}" style="color:black;background-color: transparent;padding: 15px 15px">{{story.get_comment_count }} <i style="font-size: x-large" class="fa-regular fa-comments"></i></a></div>
+                            </div>
+                        </div></div></div>
+                            <div class="col-2 d-lg-block d-block"></div>
+
+</div>
+                    <div class="col-3 d-lg-block d-none"></div></div>
+                    </div>
+
+{#                    {% endif %}#}
+                {% endfor %}
+                    {% else %}
+                    <div style="display: flex; justify-content: center;padding-top: 5%">
+                            <img src="{% static "images/empty_logo.png" %}">
+                    </div>
+                    <h1 style="font-family:sans-serif;padding: 5% 0%;margin-bottom:0%;color: white;text-align: center"> Wow,such empty</h1>
+                    <h2 style="font-family:sans-serif;padding: 0% 0%;color: white;text-align: center">Want to be First ? </h2>
+<div style="display: flex; justify-content: center;padding-top: 5%">
+    <a href="{% url 'pages:main' %}" style="color: #EBB42C;" class="btn btn-warning">Generate</a>
+</div>
+            {% endif %}
+    </div>
+
+                </body>
+<script>
+
+      window.onload = function() {
+    var activeButtonId = "{{ category }}" + "Btn"
+    if (activeButtonId) {
+        var activeButton = document.getElementById(activeButtonId);
+        if (activeButton) {
+            activateButton(activeButton);
+        }
+    }
+    else{
+        activateButton(document.getElementById("AllBtn"))
+    }
+};
+console.log(window.story_category);
+      function activateButton(button) {
+    var buttons = document.querySelectorAll('.btn');
+    buttons.forEach(function(btn) {
+        btn.classList.remove('active');
+        btn.style.backgroundColor = '#083130';
+    });
+    button.classList.add('active');
+    button.style.backgroundColor = '#EBB42C';
+}
+</script>
+</html>
+
+{% endblock %}

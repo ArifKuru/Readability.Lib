@@ -1,0 +1,119 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Readability.Lib</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+</head>
+<body>
+<div class="container-fluid">
+ <div class="row" style="height: 100vh">
+     <div class="col d-lg-block d-none" style="background-color:#08312e;padding: 0;padding-top: 3%">
+    <img src="{% static 'images/landingv.png' %}" width="100%">
+</div>
+
+     <div class="col d-lg-bloc"style="background-color: #EBB42C;">
+         <nav class="navbar navbar-expand-sm">
+             <div class="container-fluid d-flex align-items-center justify-content-end">
+    <button style="border: none;
+      background-color: transparent;
+      padding: 12px;
+      color:black;
+
+" type="button" class="btn btn-primary" onclick="aboutUs()"><b>About Us</b></button>
+
+  </div>
+</nav>
+    <div class="container-fluid" style="height: 18%">
+    </div>
+         <div class="row">
+    <div class="col">
+    </div>
+    <div class="col-8 d-flex align-items-center justify-content-center" >
+      <h1 id="heading" style="
+      font-size: 60px;
+      font-family: 'Franklin Gothic Book'">Bring Out <br>Your Creativity</h1>
+    </div>
+    <div class="col">
+    </div>
+     </div>
+
+         <div class="container-fluid" style="height: 5%">
+    </div>
+         <div class="row">
+             <div class="d-grid gap-2 col-3 mx-auto">
+<button onclick="location.href='{% url 'login' %}'" type="button" class="btn btn-warning btn-lg bg-black rounded-0 text-warning">
+    Start Now
+</button>
+</div>
+             </div>
+                      <div class="container-fluid" style="height: 8%">             </div>
+
+
+
+<div class="d-grid gap-2 col-4 mx-auto" style="padding-bottom: 2%">
+<div class="row">
+     <div class="col d-flex align-items-center justify-content-center"><button style="border: none;
+      background-color: transparent;
+      padding: 0;
+      color:black;
+        " type="button" class="btn btn-primary" onclick="headPhone()"><i class="fa-solid fa-headphones-simple" style="font-size: 30px"></i></button></div>
+     <div class="col d-flex align-items-center justify-content-center"><button style="border: none;
+      background-color: transparent;
+      padding: 0;
+      color:black;
+        " type="button" class="btn btn-primary" onclick="book()"><i class="fa-solid fa-book" style="font-size: 30px"></i></button></div>
+ <div class="col d-flex align-items-center justify-content-center"><button style="border: none;
+      background-color: transparent;
+      padding: 0;
+      color:black;
+        " type="button" class="btn btn-primary" onclick="brain()"><i class="fa-solid fa-brain" style="font-size: 30px"></i></button></div>
+
+</div>
+</div>
+    <div id="aboutContainer" class="container-fluid d-flex align-items-center justify-content-center" style="padding-top: 4%;padding-left: 5%;padding-right: 5%">
+      <p id="aboutText" style="
+      display: none;
+      font-size: larger;
+      font-family: 'Franklin Gothic Book'"></p>
+    </div>
+
+
+ </div>
+    </div>
+</div>
+ <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+<script>
+    function aboutUs(){
+        var aboutText=document.getElementById("aboutText")
+        aboutText.style.display="inline-block"
+        aboutText.innerText="Readability.Lib is a next-generation accessible library aimed at fostering creativity and considering people with disabilities. It is an open-source website that aims to cultivate a unique community passionate about fictional stories, fostering their imagination skills while providing them with ease."
+    }
+    function headPhone(){
+        var aboutText=document.getElementById("aboutText")
+        aboutText.style.display="inline-block"
+        aboutText.innerText="Readability.Lib utilizes Google Cloud Services to offer top-notch natural voice support for over 100 languages. Experience the ease of listening to your story!"
+    }
+    function book(){
+        var aboutText=document.getElementById("aboutText")
+        aboutText.style.display="inline-block"
+        aboutText.innerText="Readability.Lib is a next-generation library where you can access publicly shared stories and books. You can also utilize your own materials to read and share with the community!"
+    }
+    function brain(){
+        var aboutText=document.getElementById("aboutText")
+        aboutText.style.display="inline-block"
+        aboutText.innerText="Readability.Lib incorporates AI technologies aimed at boosting authors' creativity and enhancing their experience. These include AI models like Authorease and OpenAI."
+    }
+</script>
+
+</body>
+</html>

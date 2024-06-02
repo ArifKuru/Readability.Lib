@@ -1,0 +1,190 @@
+{% extends 'partials/_base.html' %}
+ {% block content %} {% load static %}
+
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <style>
+        select.form-select-custom option {
+      background-color: #083130; /* İstediğiniz metin rengini burada belirleyebilirsiniz */
+    }
+        p{color: white;
+        }
+
+    </style>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Profile</title>
+</head>
+<body  style="padding:0;background-color: #083130">
+  <div class="container mt-5">
+    <div class="row">
+        <div id="profileInfos" class="col-md-4">
+                <img style="object-fit:cover;height:300px;width: 300px;padding-bottom:15px;border-radius: 50%;" src="{{ user.profile.image.url }}" alt="Profile Image" class="card-img-top">
+                <div class="card-body">
+                    <p style="margin: 0;font-size: x-large"><strong>{{ user.first_name }} {{ user.last_name }}</strong></p>
+                    <p style="color:#afafaf;font-size: larger">{{ user.username }}</p>
+                    <p>{{ user.profile.bio }}</p>
+                    <button onclick="editProfile()" type="button" class="btn btn-secondary" style="padding:5px 20px;width: 100%"><p style="margin: 0">Edit Profile</p></button>
+                    <p></p>
+                    <p><strong><i class="fa-solid fa-earth-americas"></i></strong> {{ user.profile.country.name }}  <img src="{{user.profile.country.flag }}"></p>
+
+                    <p><strong><i class="fa-regular fa-envelope"></i></strong> {{ user.email }}</p>
+
+
+    {#only if user is self#}
+
+                                        <a href="{% url 'chat:chat_panel' username="general" %}" class="btn btn-success" style="width: 100%;margin-bottom: 50px"><i class="fa-regular fa-envelope"></i></a>
+                                        {% if user.is_superuser %}
+                                        <a href="/admin/" class="btn btn-secondary" style="color:white;font-family:sans-serif;width: 100%;margin-bottom: 50px">Manage as admin <i class="fa-solid fa-user-tie"></i></a>
+                                        {% endif %}
+
+                        <form style="margin: 0" method="POST" action="{% url 'logout' %}" id="logout">
+                            {% csrf_token %}
+                  <button type="submit" value="Logout" class="btn btn-danger" style="margin-bottom:25px;padding:5px 20px">Logout</button>
+                        </form>
+                </div>
+        </div>
+    {#only if user is self#}
+
+            <div id="edit" class="col-md-4" style="display: none">
+                <p style="font-size: x-large">User Profile Form</p>
+    <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+      <div>  <img class="profile-image" id="profileImg" style="object-fit:cover;height:300px;width: 300px;padding-bottom:15px;border-radius: 50%;" src="{{ user.profile.image.url }}"></div>
+<div style="padding:10px 20px;color:white; max-width:400px; background-color: transparent; border-radius: 5px; border: 1px solid white;">
+    {{ form.image }}
+</div>
+<br><hr style="color: white;width: 80%">
+        <label for="id_bio"><p style="margin: 0;display: inline-block">Bio:</p></label>
+    <div> {{ form.bio }} </div>
+    <label for="id_gender" style="color: white">Gender:</label>
+    {{ form.gender }}
+    <label for="id_country" style="color: white">Country:</label>
+    {{ form.country }}
+{#    <label for="id_dateOfBirth">Date of Birth:</label>#}
+{#    {{ form.dateOfBirth }}#}
+                       <a  style="background-color:#203A49;margin-top: 25px;color:white" class="btn btn-success" href="{% url "settings:settings" %}">Language Settings</a>
+        <br>
+        <button type="submit" style="margin-top: 25px;color:white;border-radius: 0" class="btn btn-success">Save</button>
+
+                <button onclick="cancelEdit()" type="reset" style="margin-top: 25px;margin-left:25px;color:white;border-radius: 0" class="btn btn-danger">Cancel</button>
+
+
+</form>
+
+            </div>
+
+        <div class="col-md-8">
+                                            <div class="btn-group" style="background-color: #083130;">
+
+                                        <btn id="bringStoriesBtn" onclick="BringStories()" class="btn btn-sm btn-outline-secondary" style="color: white">Stories</btn>
+
+                                        <btn id="bringCommentsBtn" onclick="BringComments()" class="btn btn-sm btn-outline-secondary" style="color: white">Comments</btn>
+                                            </div>
+        <hr style="color: white">
+            <div class="row" id="storiesRow" style="padding: 0;margin: 0">
+                {% for story in stories %}
+                    <div class="col-md-4" style="display: inline-block;">
+                        <div style="background-color:rgba(0,211,211,0.32);border-radius: 0;border: 0;" class="card mb-4 box-shadow">
+                            <img style="border-radius: 0;" class="card-img-top" src="/media/{{ story.image }}" alt="image of story">
+                            <div class="card-body" style="height:250px;background-color: transparent">
+                                <p class="card-text" style="display:inline;height:80px;font-family: 'Franklin Gothic Book'">{{ story.content|truncatewords:20 }}</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group" style="position: absolute; bottom: 0; left: 0; width: 100%; background-color: #083130;">
+                                        <a href="{% url 'pages:generated' story.storyId %}" class="btn btn-sm btn-outline-secondary" style="color: white">View</a>
+                                    </div>
+                                      <small class="text-muted">{% if story.isPublic %}
+     <i style="color: #EBB42C" class="fa-solid fa-people-group"></i>
+{% else %}
+{% endif %}</small>
+                                    <small class="text-muted">{{ story.createDate }}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+<div class="row" id="commentsRow" style="display: none;";>
+    {% for comment in comments %}
+        <div class="col-md-6" style=" margin-bottom: 15px;">
+           <a style="text-decoration: none;color: inherit" href="{% url 'form:detail' story_id=comment.story.storyId %}"> <div style="background-color: #004646;display: flex; align-items: center; padding: 10px;margin-left: 5px">
+                <img style="width: 100px; height: 100px; object-fit: cover; border-radius: 50%; margin-right: 15px;" src="/media/{{ comment.story.image }}" alt="image of story">
+
+               <p style="font-family: 'Franklin Gothic Book'; margin: 0;"><b  style="color:white;font-family: 'Franklin Gothic Book'; margin: 0;">{{ comment.user.username }}:</b>
+                   <br>
+                   {{ comment.content }}</p>
+            </div></a>
+        </div>
+    {% endfor %}
+</div>
+
+        </div>
+    </div>
+</div>
+
+
+</body>
+  <script>
+      function BringStories(){
+          if(document.getElementById("commentsRow").style.display!="none"){
+        temp=document.getElementById("commentsRow").style.display;
+          console.log(temp);
+          document.getElementById("storiesRow").style.display=temp;
+          document.getElementById("commentsRow").style.display="none";
+          document.getElementById("bringStoriesBtn").classList.add("active");
+                                 document.getElementById("bringCommentsBtn").classList.remove("active");
+
+        document.getElementById("bringStoriesBtn").disabled = true;
+}
+      }
+
+      function BringComments(){
+                    if(document.getElementById("storiesRow").style.display!="none") {
+
+                        temp = document.getElementById("storiesRow").style.display
+                        document.getElementById("commentsRow").style.display = temp
+                        document.getElementById("storiesRow").style.display = "none"
+                        document.getElementById("bringCommentsBtn").disabled = true;
+                        document.getElementById("bringStoriesBtn").classList.remove("active");
+
+                        document.getElementById("bringCommentsBtn").classList.add("active");
+                    }
+      }
+
+document.getElementById('id_image').addEventListener('change', function(){
+    var file = this.files[0];
+    if (file) {
+        var reader = new FileReader();
+        reader.onload = function(event) {
+            document.getElementById('profileImg').src = event.target.result; // Seçilen dosyanın önizlemesini göster
+        };
+        reader.readAsDataURL(file);
+    }
+});
+
+    function cancelEdit(){
+        var edit = document.getElementById("edit");
+        var profile = document.getElementById("profileInfos");
+        edit.style.display="none";
+        profile.style.display="inline";
+    }
+    function editProfile(){
+        var edit = document.getElementById("edit");
+        var profile = document.getElementById("profileInfos");
+        edit.style.display="inline";
+        profile.style.display="none";
+    }
+
+
+</script>
+</html>
+
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'partials/_base.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Language Settings</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body style="background-color: #083130">
+    <div class="container-fluid" style="padding: 0px 50px; margin-top: 30px;">
+<div class="container bg-darkcyan p-5 rounded" style="background-image: url('{% static "images/settings.jpeg" %}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+            <h1 class="text-white" style="font-family: sans-serif;">Language Settings</h1>
+            <form method="POST" style="color: white">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary">Save</button>
+            </form>
+            <p class="text-white" style="font-family: sans-serif; margin-top: 30px;">
+                <!-- Description of language settings -->
+                <b>Reading Language:</b> This is the language for listening to your stories.<br>
+                <b>Transcribe Language:</b> This is the language in which you will speak when using the microphone.<br>
+                <b>Reader Gender:</b> This is the gender of the voice actor for your stories.<br>
+                <b>Translator Language:</b> This is the language used for translation when you request.<br>
+            </p>
+        </div>
+    </div>
+</body>
+</html>
+{% endblock %}

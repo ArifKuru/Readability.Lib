@@ -1,0 +1,140 @@
+{% extends 'partials/_base.html' %}
+ {% block content %}{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <style>
+        .invite-container {
+            background: rgba(0, 210, 210, 0.32);
+            border-radius: 5px;
+            padding: 20px;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            color: white;
+            margin-top: 35px;
+        }
+        .invite-button {
+            background-color: #ffc107;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .invite-button:hover {
+            background-color: #e0a800;
+        }
+        .key-container {
+            background: rgba(0, 210, 210, 0.32);
+            border-radius: 5px;
+            text-align: center;
+            padding: 20px;
+            margin-bottom:35px;
+        }
+        .key-text {
+            color: white;
+            font-family: sans-serif;
+            font-size: 2em;
+        }
+.row.no-gutters {
+            margin-right: 0;
+            margin-left: 0;
+        }
+        .row.no-gutters > [class*='col-'] {
+            padding-right: 0;
+            padding-left: 0;
+        }
+    </style>
+ <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create a Room</title>
+</head>
+<body style="background-color: #083130">
+<div class="container-fluid">
+<div class="row no-gutters">
+    <div class="col-5" > <img src="{{ room.game.image.url }}" style="height:550px;width: 100%;object-fit: contain"></div>
+    <div class="col-7">
+<div class="key-container">
+    <h1 class="key-text" id="roomKey">
+    </h1>
+</div>
+<div class="container-fluid">
+    <div class="row" style="background: rgba(0,210,210,0.32); border-radius: 5px;">
+        <div class="col-4">
+            <iframe style="height: 300px; width: 100%;" src="{% url 'pages:video_call' %}"></iframe>
+        </div>
+        <div class="col-8 d-flex flex-column justify-content-center align-items-center">
+            <div class="spinner-border text-warning" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <div class="mt-3">Waiting for other player...</div>
+        </div>
+    </div>
+</div>
+        <div class="container my-4">
+    <div class="invite-container">
+        Invite other users to play with you here. You can send them messages, <a href="#" class="invite-button" onclick="openNewTab()">send them message!</a>
+    </div>
+</div>
+    </div>
+
+
+</div>
+</div>
+<script>
+    function check_all_players_start() {
+
+    var data = {
+        "room_id": {{room.id}},
+        "game_id":{{ room.game.id }}
+    };
+
+    fetch('/check_all_players_start/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': '{{ csrf_token }}'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.isOk) {
+                window.location.href = "{% url "pages:group_game" room.game.id 0 room.id %}";
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+setInterval(check_all_players_start, 1000); // Her 5 saniyede bir kontrol et
+
+    function openNewTab() {
+        const url = '/chat/general/'; // Your desired URL
+        window.open(url, '_blank');
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const roomKey = '{{ room.key }}'; // This should be dynamically rendered by your template engine
+        if (roomKey.length === 6) {
+            const formattedKey = roomKey.slice(0, 3) + ' ' + roomKey.slice(3);
+            document.getElementById('roomKey').textContent = formattedKey;
+        } else {
+            document.getElementById('roomKey').textContent = roomKey;
+        }
+    });
+</script>
+</body>
+{% endblock content %}
+
+</html>

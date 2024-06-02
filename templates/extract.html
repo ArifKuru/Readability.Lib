@@ -1,0 +1,121 @@
+{% extends 'partials/_base.html' %}
+{% block content %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Extract PDF!</title>
+</head>
+<body style="background-color: #083130">
+<div style="padding: 0 2%">
+    <!-- PDF yükleme formu -->
+
+
+
+
+<div id="placeHolder">
+       <form method="post" enctype="multipart/form-data" id="pdf_form">
+        {% csrf_token %}
+        <input style="display: none" id="pdf_input" type="file" name="pdf_file" accept=".pdf" required>
+        <div class="container-fluid">
+            <div class="row">
+                <div style="display: flex; justify-content: center;padding-top: 5%">
+                    <label for="pdf_input"><i  style="font-size: xxx-large;color:  #EBB42C"  class="fa-regular fa-file-pdf"></i></label>
+       </div>
+                    <h1 style="font-family:sans-serif;padding: 5% 0%;margin-bottom:0%;color: white;text-align: center" id="showDocName">Choose File</h1>
+                <h2 style="font-family:sans-serif;padding: 0% 0%;color: white;text-align: center">You can Listen And Summarize Your Pdf's</h2>
+
+                <div style="display: flex; justify-content: center;padding-top: 5%">
+
+<button id="extractBtn" class="btn btn-warning" type="submit">
+        <div id="SpinnerBtn" class="spinner-grow text-success" role="status" style="display:none;">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <span id="btnText">Extract!</span>
+    </button>                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+</div>
+<!-- PDF yükleme sonuçları -->
+    <hr style="color: #de9f02">
+{% if pdfs %}
+<p style="color: white;font-size: large;padding-top: 15px;padding-left: 15px" >Extracted Before!</p>
+{% endif %}
+<div style="display: flex; flex-wrap: wrap; gap: 16px;">
+  {% for pdf in pdfs %}
+    <div style="border: 1px solid #ddd; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); overflow: hidden; width: 200px; margin: 16px; text-align: center; transition: transform 0.2s;">
+      <img src="{{ pdf.image.url }}" alt="PDF Image" style="width: 100%; height: auto;">
+      <div style="padding: 16px;background-color:#EBB42C ">
+        <a href="{% url 'pages:read_pdf' pdf_id=pdf.id %}" style="text-decoration: none; color: #333; font-weight: bold;">{{ pdf.content|slice:":-4" }}</a>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+<script>
+
+
+$(document).ready(function() {
+    $('#pdf_form').submit(function(event) {
+        event.preventDefault();
+
+        var formData = new FormData($(this)[0]);
+
+        // Show the spinner, hide the button text, and disable the button
+        document.getElementById("SpinnerBtn").style.display = "inline-block";
+        document.getElementById("btnText").style.display = "none";
+        document.getElementById("extractBtn").disabled = true;
+
+        $.ajax({
+            url: '/upload_pdf/',
+            type: 'POST',
+            data: formData,
+            async: true,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                window.location.href = '/read_pdf/' + response.id;
+            },
+            error: function(xhr, errmsg, err) {
+                console.log(xhr.status + ": " + xhr.responseText);
+                // Revert UI changes on error
+                document.getElementById("SpinnerBtn").style.display = "none";
+                document.getElementById("btnText").style.display = "inline";
+                document.getElementById("extractBtn").disabled = false;
+                // Optionally, display an error message to the user
+                alert("An error occurred: " + xhr.responseText);
+            }
+        });
+    });
+});
+
+    var input = document.getElementById('pdf_input');
+    var showDocName = document.getElementById('showDocName');
+    var pdf_name = document.getElementById("pdf_name")
+    input.addEventListener('change', function() {
+        var DocName = input.files[0].name;
+        var trimmedDocName = DocName.substring(0, DocName.lastIndexOf('.'));
+        showDocName.innerText = 'Choosen File: ' + DocName;
+        pdf_name.innerText=trimmedDocName;
+    });
+
+
+</script>
+</body>
+{% endblock content %}
+</html>

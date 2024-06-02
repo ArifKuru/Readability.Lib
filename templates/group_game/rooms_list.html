@@ -1,0 +1,115 @@
+{% extends 'partials/_base.html' %}
+ {% block content %}{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<style>
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.username {
+    font-weight: bold;
+    text-overflow: ellipsis;
+}
+
+.user-bio {
+    font-weight: normal;
+    text-overflow: ellipsis;
+    font-size: 0.9em;
+    color: rgba(255, 255, 255, 0.7); /* Slightly muted color */
+}
+  .user-item {
+     width: 80%;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    color: white;
+    font-family: sans-serif;
+    background-color: #042d2c;
+    margin-bottom: 25px;
+    margin-left: 10%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.user-item img {
+    margin-right: 10px;
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    object-fit: cover;
+}
+</style>
+ <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Active Rooms!</title>
+</head>
+<body style="background-color: #083130">
+
+<div style="font-family: sans-serif;color: white;padding: 25px;padding-bottom: 0"><h5>List of available rooms!</h5></div>
+<hr style="color: #d58c00">
+{% if rooms %}
+    {% for room in rooms %}
+                    <div class="user-item" onclick="start_chatTo('{{ room.creator.username }}')">
+
+    <img src="{{ room.creator.profile.image.url }}">
+    <div class="user-info">
+        <span class="username">{{ room.creator.username }}</span>
+        <span class="user-bio">{{ room.creator.profile.bio}}</span>
+    </div>
+                        <a class="btn btn-success" style="margin-left: 50px" href="{% url "pages:key_verification" game_id=room.game.id room_id=room.id %}">Join This</a>
+
+</div>
+
+                 {% endfor %}
+{% endif %}
+<script>
+function check_new_room() {
+
+    var data = {
+        "game_id": {{game.id}}
+    };
+    var fetchurl="";
+    {% if game.numberOfPlayer == 2 %}
+        fetchurl='/check_room_for_2p/';
+        {% elif game.numberOfPlayer == 3 %}
+        fetchurl='/check_room_for_3p/';
+        {% elif game.numberOfPlayer == 4 %}
+        fetchurl='/check_room_for_4p/';
+
+    {% endif %}
+    fetch(fetchurl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': '{{ csrf_token }}'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.number_of_rooms!=={{ rooms.count }}) {
+            window.location.reload();
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+setInterval(check_new_room, 1000); // Her 5 saniyede bir kontrol et
+</script>
+
+</body>
+{% endblock content %}
+</html>

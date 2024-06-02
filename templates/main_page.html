@@ -1,0 +1,430 @@
+{% extends 'partials/_base.html' %}
+ {% block content %}{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <style>
+
+.card {
+    border-radius: 0; /* Remove rounded corners */
+  }
+
+
+        .slider{
+            height: 2px;
+            background: #111;
+            -webkit-appearance: none;
+            outline: none;
+            border-radius: 2px;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+ <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Page</title>
+</head>
+<body style="background-color: #083130">
+
+<!-- content start-->
+<div class="container-fluid" >
+<div class="row" style="display: flex; justify-content: center; align-items: center; padding-left: 2%; padding-right: 2%; align-content: center;">
+<div class="col-12" style="border-radius:15px;background-image: url('{% static "images/thad.png" %}'); background-size: cover;background-repeat: no-repeat; background-position: center; padding-top: 1%;">
+            <div id="content1" style="display: inline">
+            <strong style="
+            padding-left: 2%;padding-top: 5%;color: #083130;font-family: 'Franklin Gothic Book';font-size: large">Craft Your Tales With Authorease!</strong>
+<div class="dropdown" style="padding-top: 5%; padding-left: 2%;">
+    <label for="dropdownMenuButton" style="font-family: sans-serif">Model : </label>
+    <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" style="border-radius: 0; color: #FFFFFF; background-color: #083130;">Gemini</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="background-color: #083130;">
+          <li><a style="color: #FFFFFF;" class="dropdown-item" href="#" onmouseover="this.style.backgroundColor='#FFFFFF'; this.style.color='#083130';" onmouseout="this.style.backgroundColor=''; this.style.color='#FFFFFF';" onclick="changeDropdownText('Gemini')">Gemini</a></li>
+    <li><a style="color: #FFFFFF;" class="dropdown-item" href="#" onmouseover="this.style.backgroundColor='#FFFFFF'; this.style.color='#083130';" onmouseout="this.style.backgroundColor=''; this.style.color='#FFFFFF';" onclick="changeDropdownText('GPT-3.5')">GPT-3.5</a></li>
+  </ul>
+</div>
+            <div style="padding-top: 5%;padding-left: 2%;font-family: sans-serif" >
+              Category :
+</div>
+<div style="padding-top: 1%;padding-left: 2%" >
+            <button id="childBtn" value="Child" type="button" class="btn btn-warning" style=" margin-right: 15px;background-color: #083130; color: #FFFFFF; border-radius: 5px;" onclick="activateButton(this)">
+    Child <i class="fas fa-child" style="color: green;"></i>
+</button>
+
+            <button value="Science-Fiction" type="button" class="btn btn-warning" style=" margin-right: 15px;background-color: #083130; color: #FFFFFF; border-radius: 5px;"onclick="activateButton(this)">
+    Science <i class="fas fa-atom" style="color:  deepskyblue;"></i>
+</button>
+
+            <button value="Crime-Fiction" type="button" class="btn btn-warning" style=" margin-right: 15px;background-color: #083130; color: #FFFFFF; border-radius: 5px;"onclick="activateButton(this)">
+    Crime <i class="fas fa-handcuffs" style="color:rgb(128,128,128)"></i>
+</button>
+     <button value="Fantasy" type="button" class="btn btn-warning" style=" margin-right: 15px;background-color: #083130; color: #FFFFFF; border-radius: 5px;"onclick="activateButton(this)">
+    Fantasy <i class="fa-solid fa-dragon" style="color: red"></i>
+</button>
+    <button value="Horror" type="button" class="btn btn-warning" style=" margin-right: 15px;background-color: #083130; color: #FFFFFF; border-radius: 5px;"onclick="activateButton(this)">
+    Horror <i class="fa-solid fa-book-skull" style="color:saddlebrown;"></i>
+</button>
+
+</div>
+<div style="padding-top: 2%;padding-left: 2%" >
+            <button value="Adventure" type="button" class="btn btn-warning" style=" margin-right: 15px;background-color: #083130; color: #FFFFFF; border-radius: 5px;"onclick="activateButton(this)">
+    Adventure <i class="fa-solid fa-wand-sparkles" style="color: greenyellow"></i>
+</button>
+
+            <button value="Romance" type="button" class="btn btn-warning" style=" margin-right: 15px;background-color: #083130; color: #FFFFFF; border-radius: 5px;"onclick="activateButton(this)">
+    Romance <i class="fa-solid fa-heart" style="color: red"></i>
+</button>
+
+            <button value="Mystery" type="button" class="btn btn-warning" style=" margin-right: 15px;background-color: #083130; color: #FFFFFF; border-radius: 5px;"onclick="activateButton(this)">
+    Mystery <i class="fa-solid fa-clipboard-question" style="color: tomato"></i>
+</button>
+     <button value="Drama" type="button" class="btn btn-warning" style=" margin-right: 15px;background-color: #083130; color: #FFFFFF; border-radius: 5px;"onclick="activateButton(this)">
+    Drama <i class="fa-solid fa-face-sad-cry" style="color: orange"></i>
+</button>
+    <button value="Comedy" type="button" class="btn btn-warning" style=" margin-right: 15px;background-color: #083130; color: #FFFFFF; border-radius: 5px;"onclick="activateButton(this)">
+    Comedy <i class="fa-solid fa-masks-theater" style="color: #21cccc"></i>
+</button>
+
+</div>
+            <label style="padding-bottom:2%;padding-top:2%;padding-left:2%;display: block" for="numberRange" class="form-label">Word Size :   <div style="padding-bottom:0%;padding-left:2%;display:inline-block;" class="mt-2"><b id="selectedValue" >300</b></div>
+</label>
+  <input  style="margin-bottom:7%;display:inline-block;width: 50%;background-color: white" type="range" class="slider"  id="numberRange" min="100" max="500" value="300">
+            <div style="padding-bottom: 20px">
+<div id="storyInputFrame" style="position: relative; display: inline-block; width: 50%;">
+    <input id="storyInput" placeholder="Type here about your story*" type="text" class="form-control" style='width: 100%; border:none;border-bottom: 2px solid black; border-radius: 0; background-color: transparent;font-family: sans-serif;color:#EBB42C '>
+    <button id="clearButton" style="position: absolute; right: 0; top: 50%; transform: translateY(-50%); background-color: transparent; border: none; cursor: pointer; color: #EBB42C; font-size: 1.2em; display: none;">&times;</button>
+</div>
+
+                <div id="Preview" style="display: none">
+                   Preview:
+
+               </div>
+    <button id="micBtn" onclick="toggleRecording()" style="display: inline-block;" class="btn btn-white btn-md bg-warning text-white"><i style="padding: 3px 2px;color: #083130" id="micIcon" class="fa-solid fa-microphone"></i></button>
+
+
+
+    <audio  style="display: none" id="ses" controls></audio>
+                <label id="fileLabel" for="fileInput" style="display: inline-block" class="btn btn-white btn-md bg-warning text-white" ><i style="padding: 3px 2px;color:  #083130" class="fa-regular fa-image"></i></label>
+<input style="display: none" type="file" id="fileInput">
+
+    <div style="display: none" id="result"></div>
+
+                    <button id="reloadBtn" onclick="refreshPage()" style="margin-right:5%;display: none" class="btn btn-white btn-md bg-warning text-white"><i style="padding: 3px 2px;color:  #083130" class="fa-solid fa-rotate"></i></button>
+
+
+                <button id ="generate" onclick="generateStory()" style="display: inline-block" class="btn btn-white btn-md bg-warning text-white"> <span id="spinner" style="display: none" class="spinner-grow spinner-grow-sm" aria-hidden="true"></span>
+                    <span id="spinnerText" role="status" style="display: none">Loading...</span><span style="padding: 3px 2px;color:  #083130" id="generateBtn">Generate</span></button>
+            </div>
+        </div>
+
+</div>
+</div>
+</div>
+{% if stories %}
+ <h6 style="color:#d5d5d5;padding-left: 2%;padding-top: 2%;font-family: sans-serif">Recent Stories:</h6>
+    <hr style="color: #de9f02">
+{% endif %}
+<div class="container">
+  <div class="row">
+    {% for story in stories %}
+      <div class="col-md-4">
+        <div style="border-radius: 0" class="card mb-4 box-shadow">
+          <img style="border-radius: 0;" class="card-img-top" src="{{ story.image.url }}" alt="image of story">
+          <div class="card-body" style="background-color: #093433">
+            <p class="card-text" style="padding-bottom:15px;color:white;display:inline;height:80px;font-family: 'sans-serif'">{{ story.content|truncatechars:150 }}</p>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="btn-group" style="margin-top:15px;background-color: #083130;">
+                <a href="{% url 'pages:generated' story.storyId %}" class="btn btn-sm btn-outline-secondary" style="color: white">View</a>
+              </div>
+              <small class="text-muted">{% if story.isPublic %}
+     <i style="color: #EBB42C" class="fa-solid fa-people-group"></i>
+{% else %}
+{% endif %}</small>
+              <small class="text-muted">{{ story.createDate }}</small>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% if forloop.counter|divisibleby:3 %}
+        </div><div class="row">
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+{% if stories %}
+<div class="col-12 d-flex justify-content-center align-items-center">
+  <a href="{% url "profile:profile" %}"><button style="cursor: pointer; background-color: black; color: white; font-family: 'Franklin Gothic Book'; text-align: center; padding: 2px 20px; border: none; border-radius:0">
+    See More...
+  </button></a>
+</div>
+{% endif %}
+</body>
+<script>
+function refreshPage() {
+    location.reload(); // Sayfayı yenile
+}
+document.getElementById('storyInput').addEventListener('input', function() {
+    const clearButton = document.getElementById('clearButton');
+    if (this.value) {
+        clearButton.style.display = 'inline';
+    } else {
+        clearButton.style.display = 'none';
+    }
+});
+
+document.getElementById('clearButton').addEventListener('click', function() {
+    document.getElementById('storyInput').value = '';
+    this.style.display = 'none';
+});
+
+
+
+ document.getElementById('fileInput').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            uploadImage();
+
+        }
+    });
+
+window.onload = function() {
+    var defaultButton = document.getElementById('childBtn');
+    activateButton(defaultButton);
+};
+      let chunks = [];
+    let mediaRecorder;
+        let isRecording = false;
+
+navigator.mediaDevices.getUserMedia({ audio: true })
+    .then(function(stream) {
+        mediaRecorder = new MediaRecorder(stream);
+
+        mediaRecorder.ondataavailable = function(e) {
+            chunks.push(e.data);
+        };
+
+        mediaRecorder.onstop = function() {
+            let blob = new Blob(chunks, { 'type' : 'audio/ogg; codecs=opus' });
+            let audioURL = window.URL.createObjectURL(blob);
+
+            // Ses elementine kaydedilen sesi atama
+            document.getElementById('ses').src = audioURL;
+
+            // İndirme bağlantısı oluşturma
+            let a = document.createElement('a');
+            a.href = audioURL;
+            transcribeAudio(blob);
+
+        };
+    })
+    .catch(function(err) {
+        console.log('Mikrofon erişimi reddedildi: ' + err);
+        alert('Mikrofon erişimi reddedildi: ' + err); // Kullanıcıya hata mesajı gösterme
+    });
+
+function toggleRecording() {
+    if (mediaRecorder && mediaRecorder.state === 'inactive') {
+        chunks = [];
+        mediaRecorder.start();
+        document.getElementById('micIcon').classList.remove('fa-microphone');
+        document.getElementById('micIcon').classList.add('fa-circle-stop');
+        isRecording = true;
+    } else if (mediaRecorder && mediaRecorder.state === 'recording') {
+        mediaRecorder.stop();
+        document.getElementById('micIcon').classList.remove('fa-circle-stop');
+        document.getElementById('micIcon').classList.add('fa-microphone');
+        isRecording = false;
+    }
+}
+function transcribeAudio(audioBlob) {
+    var formData = new FormData();
+    formData.append('audio_file', audioBlob, 'recorded_audio.ogg');
+
+    fetch('/transcribe/', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Burada gelen metni işleyin, örneğin HTML'e ekleyebilirsiniz
+        document.getElementById('storyInput').value = data.transcripts.join(' ');
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+{#window.onload = function() {#}
+{#    console.log("geldi");#}
+{#    var savedVisibility = localStorage.getItem('visibilityData');#}
+{#    if (savedVisibility) {#}
+{#        var visibilityData = JSON.parse(savedVisibility);#}
+{#        var content1 = document.getElementById('content1');#}
+{#        var content2 = document.getElementById('content2');#}
+{#        var generatedStory = document.getElementById("generatedStory");#}
+{#        generatedStory.innerText = visibilityData.generatedStory;#}
+{#        content1.style.display = visibilityData.content1;#}
+{#        content2.style.display = visibilityData.content2;#}
+{#    }#}
+{#        var audioVisibility = localStorage.getItem('audioVisibility');#}
+{#        var audioSrc = localStorage.getItem('audioSrc');#}
+{#        if (audioVisibility && audioSrc) {#}
+{#        var AudioContent = document.getElementById('AudioBook');#}
+{#        var AudioSrc=document.getElementById("AudioSrc")#}
+{#        AudioContent.style.display = audioVisibility;#}
+{#        AudioSrc.src = audioSrc;#}
+{#    }#}
+{# };#}
+
+
+
+    function activateButton(button) {
+    var buttons = document.querySelectorAll('.btn');
+    buttons.forEach(function(btn) {
+        btn.classList.remove('active');
+        btn.style.backgroundColor = '#083130';
+    });
+    button.classList.add('active');
+    button.style.backgroundColor = '#EBB42C';
+}
+
+    const rangeSlider = document.getElementById('numberRange');
+  const selectedValue = document.getElementById('selectedValue');
+
+  rangeSlider.addEventListener('input', function() {
+    selectedValue.innerText = rangeSlider.value;
+  });
+  function changeDropdownText(text) {
+    document.getElementById('dropdownMenuButton').innerText = text;
+  }
+
+function generateStory() {
+      var model =   document.getElementById('dropdownMenuButton').innerText ;
+
+ var generate = document.getElementById("generate");
+        generate.disabled = true;
+var generateBtn=document.getElementById("generateBtn");
+    generateBtn.style.display ="none";
+    var spinner = document.getElementById("spinner");
+    var spinnerText = document.getElementById("spinnerText");
+    spinner.style.display="inline-block";
+    spinnerText.style.display="inline-block";
+    var path=document.getElementById("result").innerText;
+        var category = document.querySelector('.btn.active').value;
+    var word_size = rangeSlider.value;
+    var prompt = document.getElementById('storyInput').value;
+    if(!prompt){
+        prompt="Create a story";
+    }
+    if(model=="Gemini"){
+        fetchUrl="/generate_story_gemini";
+    }
+    else if(model=="Story From Image"){
+        fetchUrl="/generate_story_gemini_from_image"
+    }
+    else{
+         fetchUrl="/generate_story";
+    }
+    fetch(fetchUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken')
+        },
+        body: JSON.stringify({
+            prompt: prompt,
+            path: path,
+            category: category,
+            word_size: word_size
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+            window.location.href = `/generated/${data.story}`;
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+function generateStory_From_image() {
+ var generate = document.getElementById("generate");
+        generate.disabled = true;
+var generateBtn=document.getElementById("generateBtn");
+    generateBtn.style.display ="none";
+    var spinner = document.getElementById("spinner");
+    var spinnerText = document.getElementById("spinnerText");
+    spinner.style.display="inline-block";
+    spinnerText.style.display="inline-block";
+        var category = document.querySelector('.btn.active').value;
+    var word_size = rangeSlider.value;
+    var path=document.getElementById("result").innerText;
+    fetch("/generate_story_gemini_from_image", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken')
+        },
+        body: JSON.stringify({
+            path: path,
+            category: category,
+            word_size: word_size
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+            window.location.href = `/generated/${data.story}`;
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+
+function uploadImage() {
+    var fileInput = document.getElementById('fileInput');
+    var file = fileInput.files[0];
+    var formData = new FormData();
+    formData.append('image', file);
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/upload/', true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            var response = JSON.parse(xhr.responseText);
+            if (xhr.status === 200) {
+                document.getElementById('result').innerHTML = response.message;
+            } else {
+                document.getElementById('result').innerHTML = 'An ERROR occured while loading image.';
+            }
+            document.getElementById("storyInputFrame").style.display="none";
+            document.getElementById('dropdownMenuButton').innerText = "Story From Image";
+            document.getElementById("dropdownMenuButton").disabled = true;
+            document.getElementById("Preview").innerHTML="Preview:<img src='/static/images/temp.png' height='100px'>";
+            document.getElementById("Preview").style.display="inline-block";
+            document.getElementById("fileLabel").style.display="none";
+            document.getElementById("micBtn").style.display="none";
+            document.getElementById("reloadBtn").style.display="inline-block";
+
+        }
+    };
+    xhr.send(formData);
+}
+  function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+
+</script>
+
+ {% endblock %}
+</html>

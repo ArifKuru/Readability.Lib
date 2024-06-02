@@ -1,0 +1,82 @@
+{% load static %}
+<link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/apple-touch-icon.png' %}">
+<link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/favicon-32x32.png' %}">
+<link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon-16x16.png' %}">
+<link rel="manifest" href="{% static 'images/site.webmanifest' %}">
+<!-- header start-->
+<nav class="navbar navbar-expand-lg" style="background-color: #083130;padding-bottom: 2%">
+    <div class="container-fluid">
+        <div class="col-6">
+            <a class="navbar-brand" href="{% url "pages:main" %}" style="margin-right: auto; padding-left: 4% ; padding-top: 1%">
+                <img src="{% static 'images/mainlogo.png' %}" alt="Bootstrap" style="width: 250px">
+            </a>
+        </div>
+        <button class="navbar-toggler" style="background-color: darkcyan" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav" style=" padding-right:  3%;">
+            <ul class="navbar-nav" style="margin-left: auto;">
+                <li class="nav-item"  style="width: 100px; padding-left: 10%; padding-right: 10%;">
+                    <a class="nav-link" style="color: white" aria-current="page" href="{% url "pages:main" %}">Home</a>
+                </li>
+               <li class="nav-item"  style="width: 100px; padding-left: 10%; padding-right: 10%;">
+                   <a class="nav-link" style="color: white" aria-current="page" href="{% url "form:form" "All" %}">Form</a>
+                </li>
+                  <li class="nav-item"  style=";width: 100px; padding-left: 10%; padding-right: 10%;">
+                   <a class="nav-link" style="color: white" aria-current="page" href="{% url "pages:interactive" %}">Join!</a>
+                </li>
+                <li class="nav-item" style="width: 100px; padding-left: 10%; padding-right: 10%;">
+                    <a class="nav-link" style="color: white" href="{% url "pages:extract" %}">Extract</a>
+                </li>
+{#                <li class="nav-item" style="width: 100px; padding-left: 10%; padding-right: 10%;">#}
+{#                    <a class="nav-link" style="color: white" href="{% url "settings:settings" %}">Settings</a>#}
+{#                </li>#}
+                <li class="nav-item" style="width: 100px; padding-left: 10%; padding-right: 10%;">
+                    <a class="nav-link" style="color: white" href="{% url "profile:profile" %}"><img style="object-fit:cover;height:40px;width: 40px;border-radius: 50%;" src="/media/{{ user.profile.image }}"></a>
+                </li>
+{#                <li class="nav-item" style="width: 100px; padding-left: 10%;padding-right: 10%;">#}
+{#                    <a class="nav-link" style="color: white">#}
+{#                        <form method="POST" action="{% url 'logout' %}" id="logout">#}
+{#                            {% csrf_token %}#}
+{#                            <input style="padding:0;border:none;background-color:#083130;color: white" type="submit" value="Logout">#}
+{#                        </form>#}
+{#                    </a>#}
+{#                </li>#}
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- header end-->
+
+{% block content %}
+{% endblock %}
+
+<!--footer start-->
+<footer class="footer" style="background-color: rgba(0,139,139,0.32); width: 100%;margin-top: 2%">
+    <div class="container text-white">
+        <div class="row">
+            <div class="col-md-6" style="padding-top: 2%">
+                <strong><h8 style="font-family: sans-serif;color: rgba(255,255,255,0.78)">About US</h8></strong>
+                <p style="padding-top: 1px;color: rgba(255,255,255,0.58)">Readability.Lib is a New Generation Accessible Library Which Towards to Increase Creativity & Also Considering People with Disabilities</p>
+            </div>
+            <div class="col-md-6" style="padding-top: 2%">
+                <strong><h8 style="font-family: sans-serif;color: rgba(255,255,255,0.78)">Contact Details</h8></strong>
+                <p style="padding-top: 1px;color: rgba(255,255,255,0.58)">
+                Address: PO Box 16122 Collins Street West Victoria 8007 Australia
+               </p>
+                <hr>
+                <p style="padding-top: 1px;color: rgba(255,255,255,0.58)">
+                Phone: +61 3 8376 6284</p>
+                <hr>
+            </div>
+        </div>
+    </div>
+
+
+</footer>
+<div class="container-fluid" style="background-color: rgba(0,0,0,0.25);margin: 0">
+                <p class="text-center" style="color: #808080;padding-top: 3px;margin: 0;padding-bottom: 3px">
+                    All Rights Reserved. &copy; 2024 Readability.Lib Design By :ARIF KURU
+                </p>
+</div>
+<!--footer end-->

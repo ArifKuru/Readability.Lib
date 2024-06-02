@@ -1,0 +1,354 @@
+{% extends 'partials/_base.html' %}
+ {% block content %}{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Interactive Story</title>
+</head>
+<body style="background-color: #083130">
+<div id="numberOfPlay">{{ room.game.numberOfPlayer }}</div>
+<div id="prompt"></div>
+<div  id="first-player-result"></div>
+<div  id="second-player-result"></div>
+    <div  id="third-player-result"></div>
+    <div   id="fourth-player-result"></div>
+<div style="color: white;font-family: sans-serif;margin-left: 35px">Player {% if user == room.creator %}1{% elif user == room.second_player %}2{% elif room.game.numberOfPlayer == 3 %}{% if user == room.third_player %}3{% endif %}{% elif room.game.numberOfPlayer == 4 %}{% if user == room.fourth_player %}4{% endif %}{% endif %}</div>
+
+<div id="inputArea" style="position: fixed;
+   display:  {% if game.get_contents %}inline-block{% else %}none{% endif %};
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: darkcyan;
+    padding: 10px;
+    z-index: 9999;
+    text-align: center; /* İçeriği ortala */
+    height: 10%;
+    width: 100%; /* Otomatik genişlik */">
+                 <input id="storyInput" placeholder="Enter here your decision*" type="text" class="form-control" style='display:inline-block;width: 60%; border:none;border-bottom: 2px solid black; border-radius: 0; background-color: darkcyan;'>
+                 <button id ="generate" onclick="{% if room.creator == user %}Add_FirstPlayerMove(){% else %}createRespond(){% endif %}" style="display: inline-block" class="btn btn-white btn-md bg-black rounded-0 text-white"> <span id="spinner" style="  display: none" class="spinner-grow spinner-grow-sm" aria-hidden="true"></span>
+                     <span id="spinnerText" role="status" style="display: none">Loading...</span><span id="generateBtn">Submit</span></button>
+            <div style="display:none;color: white" id="result"></div></div>
+
+<div style="display: none" id="history"></div>
+    <div class="container-fluid" style="padding: 0;width: 100%">
+  <div class="row" style="padding: 0">
+{% if game.get_contents %}
+    <div style="display: flex; width: 100%;">
+        <div style="width: 70%; max-height: 600px; overflow-y: auto; border: 0; padding: 10px;">
+{% for content in game.get_contents %}
+  <div style="border: 2px solid black; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 10px; background-color: #444; margin: 20px auto; width: 80%;">
+    <img src="{{ content.image.url }}" alt="{{ content.id }}" style="flex: 1 1 100%; max-width: 60%; height: auto; object-fit: cover; margin: 0 auto;">
+    <p style="flex: 1 1 100%; font-family: sans-serif; color: white; font-size: medium; margin: 0; padding: 10px;">{{ content.content }}</p>
+  </div>
+  <hr style="border-top: 1px solid white; width: 100%;">
+    <div id="secretCounter"></div>
+{% endfor %}
+        </div>
+        <div style="width: 30%;">
+        <iframe style="margin:5%;width: 90%; height: 60%;" src="{% url 'pages:video_call' %}"></iframe>
+        </div>
+    </div>
+{% else %}
+
+       <div style="display: flex; justify-content: center;padding-top: 5%">
+                               <img src="{{ game.gameOf.image.url }}" style="height: 100px">
+                    </div>
+                    <h1 style="font-family:sans-serif;padding: 5% 0%;margin-bottom:5%;color: white;text-align: center"> Welcome to the Interactive Story</h1>
+                    <h2 style="font-family:sans-serif;padding: 0% 0%;margin-bottom:15%;color: white;text-align: center">Please Stand By!,We are making Configurations for you!</h2>
+         <script>
+         {% if room.creator == user %}
+                Interactivity();
+             {% endif %}
+    function Interactivity() {
+    var generate = document.getElementById("generate");
+    generate.disabled = true;
+    var generateBtn=document.getElementById("generateBtn");
+    generateBtn.style.display ="none";
+    var spinner = document.getElementById("spinner");
+    var spinnerText = document.getElementById("spinnerText");
+   spinner.style.display="inline-block";
+    spinnerText.style.display="inline-block";
+    fetch("{% url "pages:interactive_Ai" %}", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken')
+        },
+        body: JSON.stringify({
+            prompt: "start",
+            game_id: {{ gameOf.id }},
+            interactive_id:{{ game.id }}
+        })
+    }).then(response => response.json())
+    .then(data => {
+        location.reload();
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+
+
+function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        </script>
+  {% endif %}
+  </div>
+</div>
+
+
+
+</body>
+<script>
+function checkResults() {
+    firstPlayerResult = document.getElementById('first-player-result');
+    secondPlayerResult = document.getElementById('second-player-result');
+    thirdPlayerResult = document.getElementById('third-player-result');
+    fourthPlayerResult = document.getElementById('fourth-player-result');
+    promptDiv=document.getElementById("prompt");
+    numberOfPlayers = {{ room.game.numberOfPlayer }};
+    // Set intervals based on the number of players
+    if (numberOfPlayers == 2) {
+  if (firstPlayerResult.textContent.trim() !== '' && secondPlayerResult.textContent.trim() !== '') {
+        console.log('First player result is not empty');
+
+        promptDiv.innerText= "first player move:" + firstPlayerResult.textContent.trim() + "second player move:" +secondPlayerResult.textContent.trim();
+                Interactivity();
+
+        firstPlayerResult.innerText="";
+  }
+    }
+    if (numberOfPlayers == 3) {
+      if (firstPlayerResult.textContent.trim() !== '' && secondPlayerResult.textContent.trim() !== '' && thirdPlayerResult.textContent.trim()!=='') {
+        console.log('First player result is not empty');
+        promptDiv.innerText= "first player move:" + firstPlayerResult.textContent.trim() + "second player move:" +secondPlayerResult.textContent.trim() + "third player move:" + thirdPlayerResult.textContent.trim();
+        Interactivity();
+
+      }
+    }
+    if (numberOfPlayers == 4) {
+         if (firstPlayerResult.textContent.trim() !== '' && secondPlayerResult.textContent.trim() !== '' && thirdPlayerResult.textContent.trim()!==''&&fourthPlayerResult.textContent.trim()) {
+        console.log('First player result is not empty');
+        promptDiv.innerText= "first player move:" + firstPlayerResult.textContent.trim() + "second player move:" +secondPlayerResult.textContent.trim() + "third player move:" + thirdPlayerResult.textContent.trim() + "fourth player move" + fourthPlayerResult.textContent.trim();
+        Interactivity();
+
+         }
+    }
+}
+
+  function startCheckingPlayers() {
+    function checkForSecondPlayerRespond() {
+        $.ajax({
+            url: '/check-second-player/',
+            type: 'GET',
+            success: function(response) {
+                if (response.second_respond) {
+                    $('#second-player-result').text(response.respond);
+                } else {
+
+                }
+            },
+            error: function(xhr, status, error) {
+                $('#second-player-result').text('An error occurred: ' + error);
+            }
+        });
+    }
+
+    function checkForThirdPlayerRespond() {
+        $.ajax({
+            url: '/check-third-player/',
+            type: 'GET',
+            success: function(response) {
+                if (response.third_respond) {
+                    $('#third-player-result').text(response.respond);
+                } else {
+                }
+            },
+            error: function(xhr, status, error) {
+                $('#third-player-result').text('An error occurred: ' + error);
+            }
+        });
+    }
+
+    function checkForFourthPlayerRespond() {
+        $.ajax({
+            url: '/check-fourth-player/',
+            type: 'GET',
+            success: function(response) {
+                if (response.fourth_respond) {
+                    $('#fourth-player-result').text(response.respond);
+                } else {
+                }
+            },
+            error: function(xhr, status, error) {
+                $('#fourth-player-result').text('An error occurred: ' + error);
+            }
+        });
+    }
+
+    numberOfPlayers = {{ room.game.numberOfPlayer }};
+    // Set intervals based on the number of players
+    if (numberOfPlayers >= 2) {
+        checkForSecondPlayerRespond();
+        setInterval(checkForSecondPlayerRespond, 1000);
+    }
+    if (numberOfPlayers >= 3) {
+        checkForThirdPlayerRespond();
+        setInterval(checkForThirdPlayerRespond, 1000);
+    }
+    if (numberOfPlayers >= 4) {
+        checkForFourthPlayerRespond();
+        setInterval(checkForFourthPlayerRespond, 1000);
+    }
+
+}
+
+// Sayfa yüklendiğinde otomatik olarak kontrol başlasın
+$(document).ready(function() {
+    {% if room.creator == user %}
+    startCheckingPlayers();
+    setInterval(checkResults, 1000);
+        {% else %}
+         setInterval(checkIfNewContent, 1000);
+    {% endif %}
+
+});
+
+function checkIfNewContent() {
+    var data = {
+        "lastContent_id": {% if game.get_last_content %}{{game.get_last_content.id}}{% else %}0{% endif %},
+        "interactive_id": {{game.id}}
+    };
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', '/check_if_newContent/', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.setRequestHeader('X-CSRFToken', getCookie('csrftoken'));
+
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                var responseData = JSON.parse(xhr.responseText);
+                if (responseData.isThere) {
+                    location.reload(); // Sayfayı yenile
+                }
+            } else {
+                console.error('Error:', xhr.statusText);
+            }
+        }
+    };
+
+    xhr.send(JSON.stringify(data));
+}
+
+
+function createRespond() {
+
+    var generate = document.getElementById("generate");
+    generate.disabled = true;
+    var generateBtn=document.getElementById("generateBtn");
+    generateBtn.style.display ="none";
+    var spinner = document.getElementById("spinner");
+    var spinnerText = document.getElementById("spinnerText");
+    spinner.style.display="inline-block";
+    spinnerText.style.display="inline-block";
+    room_id = "{{ room.id }}";
+    game_id = "{{ room.game.id }}";
+    respond = document.getElementById('storyInput').value;
+
+    fetch("{% url "pages:create_player_respond" %}", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken')
+        },
+        body: JSON.stringify({
+            room_id: room_id,
+            game_id: game_id,
+            respond:respond
+        })
+    }).then(response => response.json())
+    .then(data => {
+                console.log('Success:', data);
+
+    })
+    .catch(error => console.error('Error:', error));
+
+}
+
+
+
+
+ function Add_FirstPlayerMove(){
+    var generate = document.getElementById("generate");
+    generate.disabled = true;
+    var generateBtn=document.getElementById("generateBtn");
+    generateBtn.style.display ="none";
+    var spinner = document.getElementById("spinner");
+    var spinnerText = document.getElementById("spinnerText");
+   spinner.style.display="inline-block";
+    spinnerText.style.display="inline-block";
+     document.getElementById("first-player-result").innerText=document.getElementById("storyInput").value
+ }
+    function Interactivity() {
+    var prompt = document.getElementById('prompt').innerText;
+    fetch("{% url "pages:interactive_Ai" %}", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken')
+        },
+        body: JSON.stringify({
+            prompt: prompt,
+            game_id: {{ gameOf.id }},
+            interactive_id:{{ game.id }}
+        })
+    }).then(response => response.json())
+    .then(data => {
+        location.reload();
+    })
+    .catch(error => console.error('Error:', error));
+}
+function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+</script>
+</html>
+ {% endblock %}
