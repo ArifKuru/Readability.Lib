@@ -19,18 +19,25 @@ We have a robust user authentication system that ensures security and reliabilit
 
 - **Encrypted Passwords**: User passwords are stored in an encrypted format to protect user data.
 - **Email Verification**: An email verification process is mandatory for all users, utilizing OTP (One-Time Password) for added security.
+
+**Landing Page**
 ![image](https://github.com/ArifKuru/ReadabilityLib/assets/125080971/d42eadb8-fecd-495c-a4da-e410e6b5809d)
+**Login Page**
 ![WhatsApp Image 2024-05-22 at 20 06 22](https://github.com/ArifKuru/ReadabilityLib/assets/125080971/94446d78-bd1b-4a8b-a57c-428c64dda0b1)
+**Register Page**
 ![WhatsApp Image 2024-05-22 at 20 06 33](https://github.com/ArifKuru/ReadabilityLib/assets/125080971/5184c1e9-c6b1-4565-8f69-9e0fe8191155)
-![WhatsApp Image 2024-05-29 at 22 07 41](https://github.com/ArifKuru/ReadabilityLib/assets/125080971/e07ca487-75c0-41da-8912-8dca903270d2)
+**Main Page**
+![image (2)](https://github.com/ArifKuru/Readability.Lib/assets/125080971/79e0ddc1-2f72-4ac2-9478-23df5621bd7c)
+**Story Example**
+![Ekran görüntüsü 2024-06-03 005939](https://github.com/ArifKuru/Readability.Lib/assets/125080971/2510c152-e635-424f-9cea-7d5346051bc1)
 
-
+**Form**
 
 ![WhatsApp Image 2024-05-22 at 19 52 35](https://github.com/ArifKuru/ReadabilityLib/assets/125080971/0aa9a3f0-213c-450f-b982-e78a476c3c56)
 
 ![Ekran görüntüsü 2024-05-29 231242](https://github.com/ArifKuru/ReadabilityLib/assets/125080971/df124fe0-ba47-41cd-b95e-1bc567c3f819)
 
-
+**Extact PDF and Make it more enjoyable**
 ![Ekran görüntüsü 2024-05-29 230810](https://github.com/ArifKuru/ReadabilityLib/assets/125080971/7ca49a49-bfe2-4d57-9d54-e183512c924c)
 
 ![Ekran görüntüsü 2024-05-29 230839](https://github.com/ArifKuru/ReadabilityLib/assets/125080971/f84d9530-f0f7-4ddf-8511-22afa09e80ed)
@@ -42,6 +49,10 @@ We have a robust user authentication system that ensures security and reliabilit
 
 ![WhatsApp Image 2024-05-22 at 19 55 43](https://github.com/ArifKuru/ReadabilityLib/assets/125080971/fb1539b2-1ad7-43b0-a897-8acbb2fe4d10)
 
+**Messaging Encrypted By Fernet --Up to a Second Real Time**
+![image (4)](https://github.com/ArifKuru/Readability.Lib/assets/125080971/866d4eb5-1ae6-4879-bf7c-43316b96b9e6)
+![Ekran görüntüsü 2024-06-03 010125](https://github.com/ArifKuru/Readability.Lib/assets/125080971/880b3006-4b76-45a3-be44-b69a1ba3a0bf)
+
 
 ![WhatsApp Image 2024-05-22 at 19 56 22](https://github.com/ArifKuru/ReadabilityLib/assets/125080971/4706dfcb-1464-44ad-b5cb-8eb3d69bac8f)
 
@@ -52,5 +63,12 @@ We have a robust user authentication system that ensures security and reliabilit
 
 ![Ekran görüntüsü 2024-05-22 201007](https://github.com/ArifKuru/ReadabilityLib/assets/125080971/3178e52a-7f2d-40b3-a55d-232e57a1ecc7)
 ![Ekran görüntüsü 2024-05-22 201021](https://github.com/ArifKuru/ReadabilityLib/assets/125080971/162a3865-69b5-43b5-ad4d-f16b8b200175)
+
+
+## Online Interactive Story
+
+
+![Adsız tasarım (5)](https://github.com/ArifKuru/Readability.Lib/assets/125080971/a3079141-9ee4-48a4-b395-63c6f07fdd80)
+
 
 
