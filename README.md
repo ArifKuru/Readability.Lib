@@ -70,5 +70,6 @@ We have a robust user authentication system that ensures security and reliabilit
 
 ![Adsız tasarım (5)](https://github.com/ArifKuru/Readability.Lib/assets/125080971/a3079141-9ee4-48a4-b395-63c6f07fdd80)
 
+## Summary 
 
-
+![Readability Lib](https://github.com/ArifKuru/Readability.Lib/assets/125080971/46431bbc-4fe5-4f2b-bdc1-dd9756b24de3)
