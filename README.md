@@ -73,3 +73,6 @@ We have a robust user authentication system that ensures security and reliabilit
 ## Summary 
 
 ![Readability Lib](https://github.com/ArifKuru/Readability.Lib/assets/125080971/46431bbc-4fe5-4f2b-bdc1-dd9756b24de3)
+
+## TODOS
+-OTP Code must not defined global
