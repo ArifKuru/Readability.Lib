@@ -67,7 +67,7 @@ Using Gemini 1.5 Pro, we turn reading into a game. Below is an example of a **Ha
 
 | Intro | Choice A | Choice B | Outcome |
 | :---: | :---: | :---: | :---: |
-| ![Interactive 0](docs/interactive0.png) | ![Interactive 1](docs/interactive1.png) | ![Interactive 3](docs/interactive3.png) | ![Interactive 4](docs/interactive4.png) |
+| ![Interactive 0](docs/interactive0.jpg) | ![Interactive 1](docs/interactive1.png) | ![Interactive 3](docs/interactive3.png) | ![Interactive 4](docs/interactive4.png) |
 
 **Online Interactive Mode:**
 
