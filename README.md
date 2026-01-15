@@ -65,7 +65,7 @@ Real-time messaging with **Fernet Encryption** (up to a second latency) ensuring
 ## 🎮 Interactive & Gamified Stories
 Using Gemini 1.5 Pro, we turn reading into a game. Below is an example of a **Harry Potter** themed interactive session where the user makes choices that affect the narrative.
 
-| Intro | Choice A | Choice B | Outcome |
+| Intro | Second Response | Third Response | Fourth Response |
 | :---: | :---: | :---: | :---: |
 | ![Interactive 0](docs/interactive0.jpg) | ![Interactive 1](docs/interactive1.png) | ![Interactive 3](docs/interactive3.png) | ![Interactive 4](docs/interactive4.png) |
 
